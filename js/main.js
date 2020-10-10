@@ -19,9 +19,9 @@ const LOCATION_Y_MAX = 630;
 const PIN_QUANTITY = 8;
 const PIN_WIDTH = 50;
 const PIN_HEIGHT = 70;
-const mapArea = document.querySelector('.map');
-const mapPinsArea = document.querySelector('.map__pins');
-const pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+const mapArea = document.querySelector(`.map`);
+const mapPinsArea = document.querySelector(`.map__pins`);
+const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 const renderNumber = (min, max) => {
   return Math.floor(min + Math.random() * Math.floor(max - min));
@@ -65,7 +65,7 @@ const renderOffers = function () {
   for (let i = 0; i < PIN_QUANTITY; i++) {
     const offerFeatures = OFFER_FEATURES.slice(renderNumber(0, OFFER_FEATURES.length));
     const offerPhotos = OFFER_PHOTOS.slice(renderNumber(0, OFFER_PHOTOS.length));
-    const locationX = renderNumber(LOCATION_X_MIN, LOCATION_X_MAX - PIN_WIDTH  - PIN_WIDTH / 2);
+    const locationX = renderNumber(LOCATION_X_MIN, LOCATION_X_MAX - PIN_WIDTH - PIN_WIDTH / 2);
     const locationY = renderNumber(LOCATION_Y_MIN, LOCATION_Y_MAX - PIN_HEIGHT);
 
     offersArray[i] = {
@@ -76,7 +76,7 @@ const renderOffers = function () {
       "offer":
         {
           "title": OFFER_TITLE,
-          "address": locationX.toString() + ", " + locationY.toString(),
+          "address": locationX.toString() + `, ` + locationY.toString(),
           "price": OFFER_PRICE[renderNumber(0, OFFER_PRICE.length)],
           "type": OFFER_TYPE[renderNumber(0, OFFER_TYPE.length)],
           "rooms": OFFER_ROOMS[renderNumber(0, OFFER_ROOMS.length)],
@@ -105,8 +105,8 @@ const renderPin = (offer) => {
   const pinStyle = `left: ` + (offer.location.x + PIN_WIDTH / 2) + `px; top: ` + (offer.location.y + PIN_HEIGHT) + `px;`;
 
   pinElement.style.cssText = pinStyle;
-  pinElement.querySelector('img').alt = offer.offer.title;
-  pinElement.querySelector('img').src = offer.author.avatar;
+  pinElement.querySelector(`img`).alt = offer.offer.title;
+  pinElement.querySelector(`img`).src = offer.author.avatar;
 
   return pinElement;
 };
@@ -118,4 +118,4 @@ for (let i = 0; i < offers.length; i++) {
 
 mapPinsArea.appendChild(fragment);
 
-mapArea.classList.remove('map--faded');
+mapArea.classList.remove(`map--faded`);
