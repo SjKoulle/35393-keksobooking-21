@@ -23,23 +23,19 @@ const mapArea = document.querySelector(`.map`);
 const mapPinsArea = document.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
-const renderNumber = (min, max) => {
+const generateNumber = (min, max) => {
   return Math.floor(min + Math.random() * Math.floor(max - min));
 };
 
-const renderUrl = (number) => {
-  let url;
-
+const generateUrl = (number) => {
   if (number < 10) {
-    url = AVATAR_URL + 0 + number + AVATAR_TYPE;
-  } else {
-    url = AVATAR_URL + number + AVATAR_TYPE;
+    return AVATAR_URL + 0 + number + AVATAR_TYPE;
   }
 
-  return url;
+  return AVATAR_URL + number + AVATAR_TYPE;
 };
 
-const renderUrlArray = (ammount) => {
+const generateUrlArray = (ammount) => {
   let numbersArray = [];
   let avatarNumbersArray = [];
 
@@ -48,25 +44,25 @@ const renderUrlArray = (ammount) => {
   }
 
   for (let i = 0; i < ammount; i++) {
-    const number = renderNumber(0, numbersArray.length);
+    const number = generateNumber(0, numbersArray.length);
     const avatarNumber = numbersArray[number];
-    avatarNumbersArray[i] = renderUrl(avatarNumber);
+    avatarNumbersArray[i] = generateUrl(avatarNumber);
     numbersArray.splice(number, 1);
   }
 
   return avatarNumbersArray;
 };
 
-const renderOffers = function () {
+const generateOffers = function () {
   let offersArray = [];
 
-  const urlArray = renderUrlArray(PIN_QUANTITY);
+  const urlArray = generateUrlArray(PIN_QUANTITY);
 
   for (let i = 0; i < PIN_QUANTITY; i++) {
-    const offerFeatures = OFFER_FEATURES.slice(renderNumber(0, OFFER_FEATURES.length));
-    const offerPhotos = OFFER_PHOTOS.slice(renderNumber(0, OFFER_PHOTOS.length));
-    const locationX = renderNumber(LOCATION_X_MIN, LOCATION_X_MAX - PIN_WIDTH - PIN_WIDTH / 2);
-    const locationY = renderNumber(LOCATION_Y_MIN, LOCATION_Y_MAX - PIN_HEIGHT);
+    const offerFeatures = OFFER_FEATURES.slice(generateNumber(0, OFFER_FEATURES.length));
+    const offerPhotos = OFFER_PHOTOS.slice(generateNumber(0, OFFER_PHOTOS.length));
+    const locationX = generateNumber(LOCATION_X_MIN, LOCATION_X_MAX - PIN_WIDTH - PIN_WIDTH / 2);
+    const locationY = generateNumber(LOCATION_Y_MIN, LOCATION_Y_MAX - PIN_HEIGHT);
 
     offersArray[i] = {
       "author":
@@ -77,12 +73,12 @@ const renderOffers = function () {
         {
           "title": OFFER_TITLE,
           "address": locationX.toString() + `, ` + locationY.toString(),
-          "price": OFFER_PRICE[renderNumber(0, OFFER_PRICE.length)],
-          "type": OFFER_TYPE[renderNumber(0, OFFER_TYPE.length)],
-          "rooms": OFFER_ROOMS[renderNumber(0, OFFER_ROOMS.length)],
-          "guests": OFFER_GUESTS[renderNumber(0, OFFER_GUESTS.length)],
-          "checkin": OFFER_CHECKIN[renderNumber(0, OFFER_CHECKIN.length)],
-          "checkout": OFFER_CHECKOUT[renderNumber(0, OFFER_CHECKOUT.length)],
+          "price": OFFER_PRICE[generateNumber(0, OFFER_PRICE.length)],
+          "type": OFFER_TYPE[generateNumber(0, OFFER_TYPE.length)],
+          "rooms": OFFER_ROOMS[generateNumber(0, OFFER_ROOMS.length)],
+          "guests": OFFER_GUESTS[generateNumber(0, OFFER_GUESTS.length)],
+          "checkin": OFFER_CHECKIN[generateNumber(0, OFFER_CHECKIN.length)],
+          "checkout": OFFER_CHECKOUT[generateNumber(0, OFFER_CHECKOUT.length)],
           "featured": offerFeatures,
           "description": OFFER_DESCRIPTION,
           "photos": offerPhotos
@@ -98,9 +94,9 @@ const renderOffers = function () {
   return offersArray;
 };
 
-const offers = Array.from(renderOffers());
+const offers = Array.from(generateOffers());
 
-const renderPin = (offer) => {
+const generatePin = (offer) => {
   let pinElement = pinTemplate.cloneNode(true);
   const pinStyle = `left: ` + (offer.location.x + PIN_WIDTH / 2) + `px; top: ` + (offer.location.y + PIN_HEIGHT) + `px;`;
 
@@ -113,7 +109,7 @@ const renderPin = (offer) => {
 
 const fragment = document.createDocumentFragment();
 for (let i = 0; i < offers.length; i++) {
-  fragment.appendChild(renderPin(offers[i]));
+  fragment.appendChild(generatePin(offers[i]));
 }
 
 mapPinsArea.appendChild(fragment);
